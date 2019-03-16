@@ -13,4 +13,11 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = "publish"
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("name", "post", "created", "active")
+    list_filter = ("active", "created")
+    search_fields = ("name", "body")
+
+
 admin.site.register(Post, PostAdmin)
+admin.site.register(Comment, CommentAdmin)
