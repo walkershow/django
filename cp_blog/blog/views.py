@@ -2,12 +2,16 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post
 from django.views.generic import ListView
+from taggit.models import Tag
 
 # Create your views here.
-def post_list(request):
+def post_list(request, tag_slug=None):
     posts = Post.published.all()
     posts_all = Post.objects.all()
     paginator = Paginator(posts_all, 3)
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts_all = posts_all.filter(tags__in=[tag])
     page = request.GET.get("page")
     try:
         posts = paginator.page(page)
@@ -16,7 +20,9 @@ def post_list(request):
     except PageNotAnInteger:
         posts = paginator.page(1)
 
-    return render(request, "blog/post/list.html", {"page": page, "posts": posts})
+    return render(
+        request, "blog/post/list.html", {"page": page, "posts": posts, "tag": tag}
+    )
 
 
 class PostListView(ListView):
