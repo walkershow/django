@@ -15,7 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url, include
+from vmapi.views import GetTasklistView
+from django.shortcuts import render
+from django.http import HttpResponse
+
+
+def list(request):
+    return HttpResponse("hello worldh")
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path("admin/", admin.site.urls),
+    # url("^blog/", include(("blog.urls", "blog"), namespace="blog")),
+    url("^vmpai/", list),
+    url("^blog/", include("vmapi.urls")),
 ]
+# # urlpatterns = [url(r"^vmapi/", include("vmapi.urls"))]
+# urlpatterns = [url("^hi/", list, name="home")]
+# print(urlpatterns)
+# # urlpatterns = [url(r"^vmapi/", list)]
+# print(GetTasklistView)
+# # urlpatterns = [url("^vmapi/", GetTasklistView.as_view(), name="index")]
+# print(include("vmapi.urls"))
