@@ -28,7 +28,7 @@ def list(request):
 urlpatterns = [
     # path("admin/", admin.site.urls),
     # url("^blog/", include(("blog.urls", "blog"), namespace="blog")),
-    url("^vmpai/", list),
+    url("^vm/", list),
     url("^blog/", include("vmapi.urls")),
 ]
 # # urlpatterns = [url(r"^vmapi/", include("vmapi.urls"))]

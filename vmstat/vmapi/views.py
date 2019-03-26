@@ -29,15 +29,14 @@ class APIView(View):
 
 
 class GetTasklistView(ListMixin, APIView):
-    model = VmCurTask
+    # model = VmCurTask
 
     def get(self, *args, **kwargs):
         from django.utils import timezone
 
+        # https://zhuanlan.zhihu.com/p/30256210
         print(timezone.now().date())
-        self.query_set = self.model.objects.filter(
-            start_time__gte=timezone.now().date()
-        )[:10]
+        self.queryset = VmCurTask.objects.filter(start_time__lt=timezone.now())[:10]
         # return {"a:1"}
         # return self.response(status="succ")
         return self.list()

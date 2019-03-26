@@ -10,8 +10,10 @@ class QuerysetMixin(object):
     def get_queryset(self):
         assert self.model or self.queryset, "no queryset found"
         if self.queryset:
+            print("in queryset")
             return self.queryset
         else:
+            print("in model")
             return self.model.objects.all()
 
 

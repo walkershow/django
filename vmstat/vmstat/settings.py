@@ -40,10 +40,11 @@ ROOT_URLCONF = "vmstat.urls"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "vm4",
-        "USER": "vm",
+        "NAME": "vm_test2",
+        "USER": "root",
         "PASSWORD": "123456",
-        "HOST": "192.168.1.21",
+        # "HOST": "192.168.1.21",
+        "HOST": "127.0.0.1",
         "PORT": "3306",
     }
 }
@@ -60,6 +61,7 @@ USE_I18N = True
 
 USE_L10N = True
 # django项目的settings.py文件中设置了USE_TZ = True, 所以会有这个警告. 如果你将其设置为False就不会有这个警告了. 但首先你要确定你的应用是否需要考虑时区问题.
+# USE_TZ = True
 USE_TZ = True
 
 
@@ -67,3 +69,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = "/static/"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {"simple": {"format": "[%(asctime)s] %(message)s"}},
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        }
+    },
+    "loggers": {"django": {"handlers": ["console"], "level": "DEBUG"}},
+}
