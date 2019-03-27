@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from vmapi.views import GetTasklistView
+from vmapi.views import js, css, home
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -28,8 +29,10 @@ def list(request):
 urlpatterns = [
     # path("admin/", admin.site.urls),
     # url("^blog/", include(("blog.urls", "blog"), namespace="blog")),
-    url("^vm/", list),
-    url("^blog/", include("vmapi.urls")),
+    url("^vmapi/", include("vmapi.urls")),
+    url(r"^$", home, name="index"),  # 访问 js 文件，记得，最后没有 /
+    url(r"^js/(?P<filename>.*\.js)$", js, name="js"),  # 访问 js 文件，记得，最后没有 /
+    url(r"^css/(?P<filename>.*\.css)$", css, name="css"),  # 访问 css 文件，记得，最后没有 /
 ]
 # # urlpatterns = [url(r"^vmapi/", include("vmapi.urls"))]
 # urlpatterns = [url("^hi/", list, name="home")]

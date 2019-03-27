@@ -40,11 +40,12 @@ ROOT_URLCONF = "vmstat.urls"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "vm_test2",
-        "USER": "root",
+        # "NAME": "vm_test2",
+        "NAME": "vm4",
+        "USER": "vm",
         "PASSWORD": "123456",
-        # "HOST": "192.168.1.21",
-        "HOST": "127.0.0.1",
+        "HOST": "192.168.1.21",
+        # "HOST": "127.0.0.1",
         "PORT": "3306",
     }
 }

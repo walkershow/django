@@ -1744,7 +1744,7 @@ class VmTaskFrequency(models.Model):
 
 class VmTaskGroup(models.Model):
     id = models.IntegerField(primary_key=True)
-    task_id = models.IntegerField()
+    # t_id = models.IntegerField()
     task_group_name = models.CharField(max_length=255, blank=True, null=True)
     start_time = models.DateTimeField(blank=True, null=True)
     end_time = models.DateTimeField(blank=True, null=True)
@@ -1760,11 +1760,12 @@ class VmTaskGroup(models.Model):
     task_latest_succ_time = models.DateTimeField(blank=True, null=True)
     allot_times = models.IntegerField()
     ranking = models.IntegerField(blank=True, null=True)
+    task = models.ForeignKey("VmTask", on_delete="CASSADE")
 
     class Meta:
         managed = False
         db_table = "vm_task_group"
-        unique_together = (("id", "task_id"),)
+        # unique_together = (("id", "t_id"),)
 
 
 class VmTaskGroupCopy1(models.Model):
