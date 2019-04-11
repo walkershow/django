@@ -1039,7 +1039,8 @@ class VmCurTask(models.Model):
     succ_time = models.DateTimeField(blank=True, null=True)
     update_time = models.DateTimeField(blank=True, null=True)
     user_type = models.IntegerField(blank=True, null=True)
-    terminal_type = models.IntegerField()
+    # terminal_type = models.IntegerField()
+    terminal_type = models.CharField(max_length=5, choices=((0, "pc"), (1, "mobile")))
     standby_time = models.IntegerField(blank=True, null=True)
     timeout = models.IntegerField(blank=True, null=True)
     copy_cookie = models.IntegerField(blank=True, null=True)
@@ -1584,10 +1585,26 @@ class VmTask(models.Model):
     script_file = models.CharField(max_length=255, blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
     type = models.IntegerField()
-    terminal_type = models.IntegerField()
-    user_type = models.SmallIntegerField()
+    # terminal_type = models.IntegerField()
+    terminal_type = models.IntegerField(
+        choices=((1, "pc"), (2, "mobile"), (3, "pc-1"), (4, "mobile-1")),
+        default=1,
+        verbose_name="终端类型",
+    )
+    user_type = models.SmallIntegerField(
+        choices=(
+            (0, "百度PC"),
+            (1, "360"),
+            (2, "搜狗"),
+            (20, "百度PC-proxy"),
+            (21, "360-proxy"),
+            (22, "搜狗-proxy"),
+        ),
+        default=1,
+        verbose_name="用户类型",
+    )
     timeout = models.SmallIntegerField()
-    is_ad = models.IntegerField(blank=True, null=True)
+    is_ad = models.IntegerField(blank=True, null=True, choices=((0, "否"), (1, "是")))
     inter_time = models.SmallIntegerField(blank=True, null=True)
     copy_cookie = models.IntegerField()
     rolling_times = models.IntegerField(blank=True, null=True)

@@ -19,7 +19,9 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 class TaskViewSet(ModelViewSet):
-    queryset = VmTaskGroup.objects.filter(task__status=1)
+    queryset = VmTaskGroup.objects.filter(task__status=1, times__gt=0).order_by(
+        "-ran_times", "-times"
+    )
     # queryset = VmTaskGroup.objects.all()
     serializer_class = VmTaskGroupSer
     authentication_classes = (CsrfExemptSessionAuthentication,)
