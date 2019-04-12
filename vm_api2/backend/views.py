@@ -24,11 +24,13 @@ class TaskViewSet(ModelViewSet):
     )
     # queryset = VmTaskGroup.objects.all()
     serializer_class = VmTaskGroupSer
-    authentication_classes = (CsrfExemptSessionAuthentication,)
+    # authentication_classes = (CsrfExemptSessionAuthentication,)
 
     def list(self, request, *args, **kwargs):
         serializer = VmTaskGroupSer(self.get_queryset(), many=True)
-        return Response(data=serializer.data)
+        headers = {}
+        headers["Access-Control-Allow-Origin"] = "*"
+        return Response(data=serializer.data, headers=headers)
 
     def retrieve(self, request, pk=None):
 
