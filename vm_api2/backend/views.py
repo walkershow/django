@@ -35,12 +35,39 @@ class TaskViewSet(ModelViewSet):
     def retrieve(self, request, pk=None):
 
         # task = get_object_or_404(self.get_queryset(), pk=pk)
+        print("pk:", pk)
         data = VmTaskGroup.objects.filter(pk=pk)
+        print("data:", data)
         # print("data.id", data[0].id)
         # print("data", data)
         # print ()
         if data:
             serializer = VmTaskGroupSer(data, many=True)
+            headers = {}
+            headers.setdefault("Access-Control-Allow-Origin", "*")
+            # headers["Access-Control-Allow-Origin"] = "*"
+            return Response(data=serializer.data, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        # instance = self.get_object()
+        # print("Instance:", instance)
+        # print("instance id, name", instance.id, instance.task_group_name)
+        # serializer = self.serializer_class(instance, data=request.data)
+        # print("request.data", request.data)
+        # if serializer.is_valid():
+        # print("serializer data", serializer.data)
+        # return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        # print("serialize error:", serializer.errors)
+        # return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        id = request.data["id"]
+        task_group_name = request.data["task_group_name"]
+        instance = self.get_object()
+        tasks = instance.task.all()
+        instance.id = id
+        instance.task_group_name = task_group_name
+        print(tasks)
+        # instance.save()
+        return Response(data={"message": "ok"}, status=status.HTTP_201_CREATED)
 
 
 def home(request):

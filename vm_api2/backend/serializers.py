@@ -16,7 +16,11 @@ class VmTaskSer(serializers.ModelSerializer):
             "get_is_ad_display",
             "get_user_type_display",
             "get_terminal_type_display",
+            "is_ad",
+            "user_type",
+            "terminal_type",
             "inter_time",
+            "status",
         )
 
 

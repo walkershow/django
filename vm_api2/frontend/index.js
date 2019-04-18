@@ -32,7 +32,7 @@ let store = {
 }
 
 store.actions.list()
-setInterval("store.actions.list()", 3000)
+//setInterval("store.actions.list()", 3000)
 let list = {
     template: `
     <table class = "table table-striped">
@@ -117,11 +117,34 @@ Vue.component('tab-home', {
         'code-list': list,
     }
 })
+
 Vue.component('tab-posts', {
-    template: '<div>Posts component</div>'
+    template: `
+    <div>
+    <transition name ="component-fade" mode="out-in" >
+
+    <component v-bind:is="v-a"></component>
+    </transition>
+    </div>
+    `,
+    //components: ['v1', 'v2']
+    components: {
+        'v-a': {
+            template: '<div>Component A</div>'
+        },
+        'v-b': {
+            template: '<div>Component B</div>'
+        }
+    }
 })
 Vue.component('tab-archive', {
     template: '<div>Archive component</div>'
+})
+Vue.component('v1', {
+    template: '<h3>hello v1</h3>'
+})
+Vue.component('v2', {
+    template: '<h3>hello v2</h3>'
 })
 new Vue({
     el: '#dynamic-component-demo',

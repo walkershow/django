@@ -1604,7 +1604,13 @@ class VmTask(models.Model):
         verbose_name="用户类型",
     )
     timeout = models.SmallIntegerField()
-    is_ad = models.IntegerField(blank=True, null=True, choices=((0, "否"), (1, "是")))
+    is_ad = models.IntegerField(
+        blank=True,
+        null=True,
+        choices=((0, "否"), (1, "是")),
+        default=1,
+        verbose_name="广告",
+    )
     inter_time = models.SmallIntegerField(blank=True, null=True)
     copy_cookie = models.IntegerField()
     rolling_times = models.IntegerField(blank=True, null=True)
