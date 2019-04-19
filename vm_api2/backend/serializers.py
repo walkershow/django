@@ -22,6 +22,8 @@ class VmTaskSer(serializers.ModelSerializer):
             "inter_time",
             "status",
         )
+        # 如果没有这个会校验不通过
+        extra_kwargs = {"id": {"validators": []}}
 
 
 class VmTaskGroupSer(serializers.ModelSerializer):
@@ -30,3 +32,24 @@ class VmTaskGroupSer(serializers.ModelSerializer):
     class Meta:
         model = VmTaskGroup
         fields = ("id", "task_group_name", "times", "ran_times", "ranking", "task")
+
+    def update(self, instance, validated_data):
+        task = validated_data.pop("task")
+        task_id = task["id"]
+        print("task-id", task_id)
+        print("update task", task)
+        print("instance", instance)
+        instance.task_group_name = validated_data.get(
+            "task_group_name", instance.task_group_name
+        )
+        instance.times = validated_data.get("times", instance.times)
+        instance.ran_times = validated_data.get("ran_times", instance.ran_times)
+        instance.ranking = validated_data.get("ranking", instance.ranking)
+        instance.save()
+        # tasks = (instance.task).objects.all()
+        # print("tasks", tasks)
+        task_object = VmTask.objects.get(pk=task_id)
+        print("task_object", task_object)
+        task_object.status = task.get("status", task_object.status)
+        task_object.save()
+        return instance

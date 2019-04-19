@@ -1587,7 +1587,7 @@ class VmTask(models.Model):
     type = models.IntegerField()
     # terminal_type = models.IntegerField()
     terminal_type = models.IntegerField(
-        choices=((1, "pc"), (2, "mobile"), (3, "pc-1"), (4, "mobile-1")),
+        choices=((1, "pc"), (2, "mobilie"), (3, "pc-1"), (4, "mobile-1")),
         default=1,
         verbose_name="终端类型",
     )
@@ -1782,7 +1782,7 @@ class VmTaskGroup(models.Model):
     task_latest_succ_time = models.DateTimeField(blank=True, null=True)
     allot_times = models.IntegerField()
     ranking = models.IntegerField(blank=True, null=True)
-    task = models.ForeignKey("VmTask", on_delete="CASSADE")
+    task = models.ForeignKey(VmTask, on_delete="CASSADE", related_name="taskingroup")
 
     class Meta:
         managed = False

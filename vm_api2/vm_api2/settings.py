@@ -127,16 +127,16 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {"simple": {"format": "[%(asctime)s] %(message)s"}},
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        }
-    },
-    "loggers": {"django": {"handlers": ["console"], "level": "DEBUG"}},
-}
+# LOGGING = {
+# "version": 1,
+# "disable_existing_loggers": False,
+# "formatters": {"simple": {"format": "[%(asctime)s] %(message)s"}},
+# "handlers": {
+# "console": {
+# "level": "DEBUG",
+# "class": "logging.StreamHandler",
+# "formatter": "simple",
+# }
+# },
+# "loggers": {"django": {"handlers": ["console"], "level": "DEBUG"}},
+# }

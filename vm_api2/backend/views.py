@@ -49,25 +49,29 @@ class TaskViewSet(ModelViewSet):
             return Response(data=serializer.data, headers=headers)
 
     def update(self, request, *args, **kwargs):
-        # instance = self.get_object()
-        # print("Instance:", instance)
-        # print("instance id, name", instance.id, instance.task_group_name)
-        # serializer = self.serializer_class(instance, data=request.data)
-        # print("request.data", request.data)
-        # if serializer.is_valid():
-        # print("serializer data", serializer.data)
-        # return Response(data=serializer.data, status=status.HTTP_201_CREATED)
-        # print("serialize error:", serializer.errors)
-        # return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        id = request.data["id"]
-        task_group_name = request.data["task_group_name"]
         instance = self.get_object()
-        tasks = instance.task.all()
-        instance.id = id
-        instance.task_group_name = task_group_name
-        print(tasks)
-        # instance.save()
-        return Response(data={"message": "ok"}, status=status.HTTP_201_CREATED)
+        print("Instance:", instance)
+        print("instance id, name", instance.id, instance.task_group_name)
+        serializer = self.serializer_class(instance, data=request.data)
+        print("request.data", request.data)
+        if serializer.is_valid():
+            # print("serializer data", serializer.data)
+            serializer.save()
+            return Response(
+                data=serializer.validated_data, status=status.HTTP_201_CREATED
+            )
+        print("serialize error:", serializer.errors)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # id = request.data["id"]
+    # task_group_name = request.data["task_group_name"]
+    # instance = self.get_object()
+    # tasks = instance.task
+    # instance.id = id
+    # instance.task_group_name = task_group_name
+    # print("task:", tasks)
+    # instance.save()
+    # return Response(data={"message": "ok"}, status=status.HTTP_201_CREATED)
 
 
 def home(request):
