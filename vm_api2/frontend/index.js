@@ -33,6 +33,8 @@ let store = {
 
 store.actions.list()
 //setInterval("store.actions.list()", 3000)
+import Vue from './vue.js';
+import tswitch from './tswitch.vue';
 let list = {
     template: `
     <table class = "table table-striped">
@@ -60,6 +62,7 @@ let list = {
             <td class="text-center">{{ item.task.get_terminal_type_display}}</td>
             <td class="text-center">{{ item.task.get_is_ad_display}}</td>
             <td class="text-center">{{ item.task.inter_time}}</td>
+            <td><tswitch></tswitch></td>
 
             <td>
             </td>
@@ -89,6 +92,7 @@ let app = { //整体页面布局
     `,
     components: {
         'code-list': list,
+        'toggle-switch': ToggleSwitch
     }
 }
 //let root = new Vue({

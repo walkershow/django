@@ -1057,7 +1057,7 @@ class VmCurTask(models.Model):
         managed = False
         db_table = "vm_cur_task"
         ordering = ("-start_time",)
-        unique_together = (("id", "terminal_type"),)
+        # unique_together = (("id", "terminal_type"),)
 
 
 class VmCurTaskHistory(models.Model):
@@ -1641,6 +1641,7 @@ class VmTask(models.Model):
     screenshot_type = models.IntegerField(blank=True, null=True)
 
     class Meta:
+        managed = False
         db_table = "vm_task"
 
 
@@ -1657,6 +1658,7 @@ class VmTaskAllotImpl(models.Model):
     ran_times_lastday = models.IntegerField(blank=True, null=True)
     order_id = models.AutoField(primary_key=True)
     remedy = models.IntegerField(blank=True, null=True)
+    is_done = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
