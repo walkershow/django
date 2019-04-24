@@ -19,16 +19,18 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 class TaskViewSet(ModelViewSet):
-    queryset = VmTaskGroup.objects.filter(times__gt=0).order_by("-ran_times", "-times")
+    queryset = VmTaskGroup.objects.filter(times__gt=0).order_by(
+        "-task__status", "-ran_times", "-times"
+    )
     # queryset = VmTaskGroup.objects.all()
     serializer_class = VmTaskGroupSer
     # authentication_classes = (CsrfExemptSessionAuthentication,)
 
     def list(self, request, *args, **kwargs):
         serializer = VmTaskGroupSer(self.get_queryset(), many=True)
-        headers = {}
-        headers["Access-Control-Allow-Origin"] = "*"
-        return Response(data=serializer.data, headers=headers)
+        # headers = {}
+        # headers["Access-Control-Allow-Origin"] = "*"
+        return Response(data=serializer.data)
 
     def retrieve(self, request, pk=None):
 
@@ -41,10 +43,10 @@ class TaskViewSet(ModelViewSet):
         # print ()
         if data:
             serializer = VmTaskGroupSer(data, many=True)
-            headers = {}
-            headers.setdefault("Access-Control-Allow-Origin", "*")
+            # headers = {}
+            # headers.setdefault("Access-Control-Allow-Origin", "*")
             # headers["Access-Control-Allow-Origin"] = "*"
-            return Response(data=serializer.data, headers=headers)
+            return Response(data=serializer.data)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -55,10 +57,23 @@ class TaskViewSet(ModelViewSet):
         if serializer.is_valid():
             # print("serializer data", serializer.data)
             serializer.save()
+            # headers = {}
+            # headers["Access-Control-Allow-Origin"] = "*"
+            # headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, PUT, OPTIONS"
+            # headers[
+            # "Access-Control-Allow-Headers"
+            # ] = "Content-Type, Accept, Authorization, X-Requested-With, Origin, Accept"
+
             return Response(
                 data=serializer.validated_data, status=status.HTTP_201_CREATED
             )
         print("serialize error:", serializer.errors)
+        # headers = {}
+        # headers["Access-Control-Allow-Origin"] = "*"
+        # headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, PUT, OPTIONS"
+        # headers[
+        # "Access-Control-Allow-Headers"
+        # ] = "Content-Type, Accept, Authorization, X-Requested-With, Origin, Accept"
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # id = request.data["id"]

@@ -33,8 +33,51 @@ let store = {
 
 store.actions.list()
 //setInterval("store.actions.list()", 3000)
-import Vue from './vue.js';
-import tswitch from './tswitch.vue';
+let ToggleSwitch = {
+    template: `
+  <label role="checkbox" :class="['switch', { toggled }]">
+    <input type="checkbox" class="switch-input" @change="toggle" />
+    <div
+      class="switch-core"
+      :style="{ backgroundColor: toggled ? colorChecked : colorUnchecked }"
+    >
+      <div
+        class="switch-button"
+        }"
+      ></div>
+    </div>
+    <span class="switch-label label-right" v-if="toggled" v-html="labelChecked">
+    </span>
+    <span class="switch-label label-left" v-html="labelUnchecked" v-else>
+    </span>
+  </label>
+    `,
+    data() {
+        return {
+            toggled: this.value,
+            colorChecked: "#25b9e9",
+            colorUnchecked: "#db572e",
+            labelChecked: "开",
+            labelUnchecked: "关"
+        };
+    },
+    props: {
+        value: {
+            type: Boolean,
+            default: true
+        },
+        speed: {
+            type: Number,
+            default: 100
+        }
+    },
+    methods: {
+        toggle(event) {
+            this.toggled = !this.toggled;
+            this.$emit("change", event);
+        }
+    }
+}
 let list = {
     template: `
     <table class = "table table-striped">
@@ -49,6 +92,7 @@ let list = {
     <th class="text-center">终端类型</th> 
     <th class="text-center">广告任务</th> 
     <th class="text-center">任务间隔时间</th> 
+    <th class="text-center">switcher</th> 
     </tr>
         </thead>
         <tbody>
@@ -62,7 +106,7 @@ let list = {
             <td class="text-center">{{ item.task.get_terminal_type_display}}</td>
             <td class="text-center">{{ item.task.get_is_ad_display}}</td>
             <td class="text-center">{{ item.task.inter_time}}</td>
-            <td><tswitch></tswitch></td>
+            <td><toggle-switch></toggle-switch></td>
 
             <td>
             </td>
@@ -74,7 +118,11 @@ let list = {
         return {
             state: store.state
         }
+    },
+    components: {
+        'toggle-switch': ToggleSwitch
     }
+
 }
 let app = { //整体页面布局
     template: `
@@ -102,7 +150,7 @@ let app = { //整体页面布局
 //'app':app
 //}
 //})
-
+//Vue.component("ToggleSwitch", {
 Vue.component('tab-home', {
     template: `
         <div class="continer-fluid">

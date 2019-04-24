@@ -53,16 +53,16 @@ class VmTaskGroupSer(serializers.ModelSerializer):
         print("task-id", task_id)
         print("update task", task_data)
         print("instance", instance)
-        instance.task_group_name = validated_data.get(
-            "task_group_name", instance.task_group_name
-        )
-        instance.times = validated_data.get("times", instance.times)
-        instance.ran_times = validated_data.get("ran_times", instance.ran_times)
-        instance.ranking = validated_data.get("ranking", instance.ranking)
+        # instance.task_group_name = validated_data.get(
+        # "task_group_name", instance.task_group_name
+        # )
+        # instance.times = validated_data.get("times", instance.times)
+        # instance.ran_times = validated_data.get("ran_times", instance.ran_times)
+        # instance.ranking = validated_data.get("ranking", instance.ranking)
         # instance.task = task_object
         # print("task status", task_data.get("status"))
         # instance.task.status = task_data.get("status", 0)
-        instance.save()
+        # instance.save()
         # tasks = (instance.task).objects.all()
         # print("tasks", tasks)
         if task_data["status"] == 1:

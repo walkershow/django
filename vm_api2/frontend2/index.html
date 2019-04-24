@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>在线 Python 解释器</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+</head>
+
+<body>
+    <div id="app">
+        <div id="dynamic-component-demo" class="demo">
+            <button v-for="tab in tabs" v-bind:key="tab" class="dynamic-component-demo-tab-button" v-bind:class="{ 'dynamic-component-demo-tab-button-active': tab === currentTab }" v-on:click="currentTab = tab">
+                {{ tab }}
+            </button>
+            <component v-bind:is="currentTabComponent" class="dynamic-component-demo-tab"></component>
+        </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/index.js"></script>
+    <style>
+        .component-fade-enter-active,
+        .component-fade-leave-active {
+            transition: opacity .3s ease;
+        }
+
+        .component-fade-enter,
+        .component-fade-leave-to {
+            opacity: 0;
+        }
+    </style>
+    <style lang="scss" scoped>
+        .switch {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            vertical-align: middle;
+            user-select: none;
+            font-size: 10px;
+            cursor: pointer;
+
+            .switch-input {
+                display: none;
+            }
+
+            .switch-label {
+                position: absolute;
+                top: 0;
+                font-weight: 600;
+                color: white;
+
+                z-index: 2;
+
+                &.label-left {
+                    left: 10px;
+                    line-height: 20px;
+                    border-top-left-radius: 2px;
+                    border-bottom-left-radius: 2px;
+                }
+
+                &.label-right {
+                    right: 10px;
+                    line-height: 20px;
+                    border-top-right-radius: 2px;
+                    border-bottom-right-radius: 2px;
+                }
+            }
+
+            .switch-core {
+                display: block;
+                position: relative;
+                box-sizing: border-box;
+                outline: 0;
+                margin: 0;
+                translition: border-color 0.3s, background-color 0.3s;
+                user-select: none;
+                width: 64px;
+                height: 20px;
+                border-radius: 4px;
+                line-height: 20px;
+
+                .switch-button {
+                    width: 32px;
+                    height: 20px;
+                    display: block;
+                    position: absolute;
+                    overflow: hidden;
+                    top: 0;
+                    left: 0;
+                    z-index: 3;
+                    transform: translate3d(0, 0, 0);
+                    background-color: #ecf0f5;
+                }
+            }
+        }
+    </style>
+</body>
+
+</html>

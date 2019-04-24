@@ -25,7 +25,7 @@ SECRET_KEY = "7+*)tpku+it1bj=rzo((gad^68wm*dx$=%233i1thv0rmzv7+8"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "backend",
 ]
@@ -44,13 +45,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = "vm_api2.urls"
 
 TEMPLATES = [
@@ -127,21 +129,21 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "simple": {
-            "format": "%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s]- %(message)s"
-        }
-    },
-    # "formatters": {"simple": {"format": "[%(asctime)s] %(message)s"}},
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        }
-    },
-    "loggers": {"django": {"handlers": ["console"], "level": "DEBUG"}},
-}
+# LOGGING = {
+# "version": 1,
+# "disable_existing_loggers": False,
+# "formatters": {
+# "simple": {
+# "format": "%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s]- %(message)s"
+# }
+# },
+# # "formatters": {"simple": {"format": "[%(asctime)s] %(message)s"}},
+# "handlers": {
+# "console": {
+# "level": "DEBUG",
+# "class": "logging.StreamHandler",
+# "formatter": "simple",
+# }
+# },
+# "loggers": {"django": {"handlers": ["console"], "level": "DEBUG"}},
+# }
