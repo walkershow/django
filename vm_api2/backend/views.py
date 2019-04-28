@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import VmTaskSer, VmTaskGroupSer
-from .models import VmTask, VmTaskGroup
+from .serializers import VmTaskSer, VmTaskGroupSer, VmTaskGroupNameSer, VmTaskGroupSer
+from .models import VmTask, VmTaskGroup, VmTaskGroupTemp, VmTaskGroupName
 from django.shortcuts import get_object_or_404
 from rest_framework.authentication import SessionAuthentication
 from django.http import HttpResponseNotFound, HttpResponse
@@ -49,14 +49,23 @@ class TaskViewSet(ModelViewSet):
             return Response(data=serializer.data)
 
     def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        print("Instance:", instance)
-        print("instance id, name", instance.id, instance.task_group_name)
-        serializer = self.serializer_class(instance, data=request.data)
+        # instance = self.get_object()
+        # print("Instance:", instance)
+        # print("instance id, name", instance.id, instance.task_group_name)
+        # group_id = request.data["group"]["id"]
         print("request.data", request.data)
+        group_id = request.data["id"]
+        task_id = request.data["task"]["id"]
+        # print(group_id, task_id)
+        instance = VmTaskGroup.objects.filter(id=group_id, task_id=task_id)[0]
+        print(instance)
+        serializer = self.serializer_class(instance, data=request.data)
+        print("serializer:", serializer)
         if serializer.is_valid():
+            print("validated data", serializer.validated_data)
             # print("serializer data", serializer.data)
-            serializer.save()
+            serializer.save(force_update=True)
+            # serializer.update()
             # headers = {}
             # headers["Access-Control-Allow-Origin"] = "*"
             # headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, PUT, OPTIONS"

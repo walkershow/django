@@ -1766,8 +1766,46 @@ class VmTaskFrequency(models.Model):
         db_table = "vm_task_frequency"
 
 
-class VmTaskGroup(models.Model):
+class VmTaskGroupName(models.Model):
     id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = "vm_task_group_name"
+
+
+class VmTaskGroupTemp(models.Model):
+    # id = models.IntegerField(primary_key=True)
+    # t_id = models.IntegerField()
+    # task_group_name = models.CharField(max_length=255, blank=True, null=True)
+    start_time = models.DateTimeField(blank=True, null=True)
+    end_time = models.DateTimeField(blank=True, null=True)
+    times = models.IntegerField(blank=True, null=True)
+    ran_times = models.IntegerField()
+    templ_id = models.IntegerField(blank=True, null=True)
+    ran_times_lastday = models.IntegerField(blank=True, null=True)
+    times_start_range = models.IntegerField()
+    times_end_range = models.IntegerField()
+    allot_type = models.IntegerField()
+    priority = models.IntegerField()
+    task_start_time = models.DateTimeField(blank=True, null=True)
+    task_latest_succ_time = models.DateTimeField(blank=True, null=True)
+    allot_times = models.IntegerField()
+    ranking = models.IntegerField(blank=True, null=True)
+    # 不加related name 会报错：fields.E304 Reverse accessor clashes in Django
+
+    task = models.ForeignKey(VmTask, on_delete="CASSADE", related_name="taskin")
+    group = models.ForeignKey(VmTask, on_delete="CASSADE", related_name="groupin")
+
+    class Meta:
+        managed = False
+        db_table = "vm_task_group_temp"
+        unique_together = ("task", "group")
+
+
+class VmTaskGroup(models.Model):
+    # id = models.IntegerField(primary_key=True)
     # t_id = models.IntegerField()
     task_group_name = models.CharField(max_length=255, blank=True, null=True)
     start_time = models.DateTimeField(blank=True, null=True)
@@ -1789,7 +1827,7 @@ class VmTaskGroup(models.Model):
     class Meta:
         managed = False
         db_table = "vm_task_group"
-        # unique_together = (("id", "t_id"),)
+        unique_together = ("id", "task")
 
 
 class VmTaskGroupCopy1(models.Model):
